@@ -1,9 +1,6 @@
-import React from 'react';
-import './App.css';
-import Header from './Components/Header'
-import UserCard from './Components/UserCard'
-import NavBar from './Components/NavBar'
-import User from './Components/User'
+import React, { useState } from 'react';
+import User from './User'
+// const users = require('../data.js');
 const users = [
   {
     id: 1,
@@ -292,41 +289,24 @@ const users = [
   },
 ];
 
-const employees = [
-  {
-    name: 'Joe',
-    id: 'ABC',
-  },
-  {
-    name: 'Jen',
-    id: 'DEF',
-  },
-  {
-    name: 'Jan',
-    id: 'GHI',
-  },
-];
-
-function App() {
-  return (
-    <div className='App'>
-      <Header/>
-      
-      {users.map((user) => (
+export default function UserCard(){
+    // const [user, setUser] = useState([]);
+    
+    return (
+        <div>
+            {users.map((user) => (
+        
         <User
-          name={user.name}
-          id={user.id}
-          city={user.city}
-          country={user.country}
-          employer={user.employer}
-          title={user.title}
-          favoriteMovies={user.favoriteMovies}
+        key={user.id}
+        name={user.name} 
+        city={user.city} 
+        country={user.country} 
+        employer={user.employer}
+        title={user.title}
+        favoriteMovies={user.favoriteMovies}
         />
-      ))}
+        ))}
+        </div>
+    )
 
-      <NavBar/>
-    </div>
-  );
 }
-
-export default App;
