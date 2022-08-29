@@ -11,17 +11,14 @@ export default function UserCard(){
 
   }
   
-  function prevUser(){
-    if(userIndex > 0){
-    setUserIndex(userIndex - 1)}
-  }
+  
 
   const [ userIndex, setUserIndex ] = useState(0)
     
     return (
       <div>
         <User
-          index={users[userIndex]}
+          position={userIndex+1 +'/' + users.length}
           key={users[userIndex].key}
           name={users[userIndex].name}
           id={users[userIndex].id}
@@ -32,7 +29,10 @@ export default function UserCard(){
           favoriteMovies={users[userIndex].favoriteMovies}
         />
 
-        <button onClick={prevUser}>Previous</button>
+        <button onClick={()=> {
+          if(userIndex > 0){
+          setUserIndex(userIndex - 1)}
+        }}>Previous</button>
         <span>
           <button>Edit</button>
           <button>Delete</button>
