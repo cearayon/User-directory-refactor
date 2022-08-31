@@ -1,0 +1,7 @@
+.header{
+    display:flex;
+    flex-direction: row;
+    background: #1a7bc9;
+    width: 100%;
+    padding-left: 50px;
+}

@@ -1,44 +1,182 @@
 import React, { useState } from 'react';
 import User from './User'
 import users from '../data'
+import './UserCard.css'
 
 //users[indexVal].name
 export default function UserCard(){
   
+  let globalId = 25
+
+  const [userData, setUserData ] = useState(users)
+  const [ userIndex, setUserIndex ] = useState(0)
+  const [ toggleAdd, setToggleAdd ] = useState(false)
+  
+  const [ id, setId ] = useState(globalId+= 1)
+  const [ name , setName ] = useState({})
+  const [ first, setFirst] = useState('')
+  const [ last, setLast] = useState('')
+  const [ city, setCity ] = useState('')
+  const [ country, setCountry ] = useState('')
+  const [ employer, setEmployer ] = useState('')
+  const [ title, setTitle ] = useState('')
+  const [ favoriteMovies, setFavoriteMovies ] = useState()
+  const [ movie1, setMovie1 ] = useState('')
+  const [ movie2, setMovie2  ] = useState('')
+  const [ movie3, setMovie3 ] = useState('')
+  
   function nextUser(){
-    if(userIndex < 24)
+    if(userIndex < globalId)
     setUserIndex(userIndex + 1)
 
   }
   
-  
+  function deleteUser(id){
+    console.log(id)
+    let updatedUsers = [...userData]
+    updatedUsers.splice(userIndex, 1)
+    console.log(updatedUsers)
+    setUserData([...updatedUsers])
 
-  const [ userIndex, setUserIndex ] = useState(0)
+
+  }
+
+  function updaterUser(){
+    
+
+  }
+  
+  function createUser(user) {
+    let userObj = {
+      id: setId(),
+      name: setName(first + last),
+      city: city,
+      country: country,
+      employer: employer,
+      title: title,
+      favoriteMovies: setFavoriteMovies([movie1, movie2, movie3])
+
+
+    }
+    
+    
+    setUserData([...userData, userObj])
+    
+    console.log(user)
+    // updatedUsers.push(user);
+  }
+    
+  
     
     return (
-      <div>
+      <div className='user_container'>
         <User
-          position={userIndex+1 +'/' + users.length}
-          key={users[userIndex].key}
-          name={users[userIndex].name}
-          id={users[userIndex].id}
-          city={users[userIndex].city}
-          country={users[userIndex].country}
-          employer={users[userIndex].employer}
-          title={users[userIndex].title}
-          favoriteMovies={users[userIndex].favoriteMovies}
+          key={userData[userIndex].id}
+          className='user_card'
+          position={userIndex + 1 + '/' + userData.length}
+          name={userData[userIndex].name}
+          city={userData[userIndex].city}
+          country={userData[userIndex].country}
+          employer={userData[userIndex].employer}
+          title={userData[userIndex].title}
+          favoriteMovies={userData[userIndex].favoriteMovies}
         />
 
-        <button onClick={()=> {
-          if(userIndex > 0){
-          setUserIndex(userIndex - 1)}
-        }}>Previous</button>
-        <span>
+        <div className='button_container'>
+          <button
+            onClick={() => {
+              if (userIndex > 0) {
+                setUserIndex(userIndex - 1);
+              }
+            }}
+          >
+            Previous
+          </button>
           <button>Edit</button>
-          <button>Delete</button>
-          <button>New</button>
-        </span>
-        <button onClick={nextUser}>Next</button>
+          <button onClick={deleteUser}>Delete</button>
+          <button onClick={() => setToggleAdd(!toggleAdd)}>New</button>
+          <button onClick={nextUser}>Next</button>
+        </div>
+        {toggleAdd ? (
+          <form className='addForm'>
+            <label htmlFor='addUser'></label>
+            <input
+              onChange={(e) => setFirst(e.target.value)}
+              autoFocus
+              id='firstInput'
+              type='text'
+              placeholder='First Name'
+              required
+            />
+            <input
+              autoFocus
+              onChange={(e) => setLast(e.target.value)}
+              id='lastInput'
+              type='text'
+              placeholder='Last Name'
+              required
+            />
+            <input
+              autoFocus
+              onChange={(e) => setCity(e.target.value)}
+              id='cityInput'
+              type='text'
+              placeholder='City'
+              required
+            />
+            <input
+              autoFocus
+              onChange={(e) => setCountry(e.target.value)}
+              id='countryInput'
+              type='text'
+              placeholder='Country'
+              required
+            />
+            <input
+              autoFocus
+              onChange={(e) => setEmployer(e.target.value)}
+              id='employerNameInput'
+              type='text'
+              placeholder='Employer'
+              required
+            />
+            <input
+              autoFocus
+              onChange={(e) => setTitle(e.target.value)}
+              id='titleInput'
+              type='text'
+              placeholder='Title'
+              required
+            />
+            <input
+              autoFocus
+              onChange={(e) => setMovie1(e.target.value)}
+              id='movie1Input'
+              type='text'
+              placeholder='Movie 1'
+              required
+            />
+            <input
+              autoFocus
+              onChange={(e) => setMovie2(e.target.value)}
+              id='movie2Input'
+              type='text'
+              placeholder='Movie 2'
+              required
+            />
+            <input
+              autoFocus
+              onChange={(e) => setMovie3(e.target.value)}
+              id='movie3Input'
+              type='text'
+              placeholder='Movie 3'
+              required
+            />
+
+
+            <button onClick={createUser}></button>
+          </form>
+        ) : null}
       </div>
     );
 
